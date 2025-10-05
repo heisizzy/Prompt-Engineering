@@ -27,11 +27,6 @@ It’s not just a list of tips — it’s a **step-by-step guide** that will tak
 
 ---
 
-## 📸 Preview
-*(Add screenshot of your book cover or a sample page here)*  
-
----
-
 ## 🚀 Who This Is For
 - Students & beginners experimenting with AI  
 - Developers building AI-powered apps  
@@ -49,8 +44,7 @@ It’s not just a list of tips — it’s a **step-by-step guide** that will tak
 
 ## 📬 Connect
 - Author: **Tobela Qampa**  
-- LinkedIn: [Insert your LinkedIn URL here]  
-- Email: *(optional)*  
+- LinkedIn: www.linkedin.com/in/tobela-qampa-6009b6387   
 
 ---
 
