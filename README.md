@@ -4,7 +4,6 @@
 
 [![GitHub release](https://img.shields.io/github/v/release/heisizzy/Prompt-Engineering?color=blue)](https://github.com/heisizzy/Prompt-Engineering/releases)
 [![Downloads](https://img.shields.io/github/downloads/heisizzy/Prompt-Engineering/total?color=green)](https://github.com/heisizzy/Prompt-Engineering/releases)
-[![License](https://img.shields.io/badge/license-All%20Rights%20Reserved-red)](LICENSE)
 
 ---
 
