@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AI Prompt Engineering — Complete Guide</title>
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --accent:#7dd3fc; --muted:#94a3b8; --glass:rgba(255,255,255,0.03);
+      --maxw:980px; --radius:14px; --pad:22px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:linear-gradient(180deg,#071021 0%, #071633 60%);color:#e6eef8;line-height:1.5}
+    .wrap{max-width:var(--maxw);margin:28px auto;padding:20px}
+    header{display:flex;align-items:center;gap:18px}
+    .logo{width:92px;height:92px;border-radius:18px;background:linear-gradient(135deg,var(--accent),#60a5fa);display:flex;align-items:center;justify-content:center;color:#012; font-weight:700; font-size:14px;box-shadow:0 6px 30px rgba(13,25,40,0.6)}
+    h1{margin:0;font-size:28px}
+    .by{color:var(--muted);font-size:13px}
+    .toc{background:var(--glass);padding:16px;border-radius:12px;margin-top:18px;color:var(--muted)}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:var(--pad); border-radius:var(--radius); margin-top:18px; box-shadow: 0 8px 30px rgba(2,6,23,0.6)}
+    h2{color:var(--accent);margin-top:6px}
+    h3{color:#cfeefd}
+    pre{background:#041626;padding:12px;border-radius:10px;overflow:auto}
+    code{background:rgba(255,255,255,0.03);padding:2px 6px;border-radius:6px;color:#dff7ff}
+    .diagram{display:block;margin:14px 0;padding:12px;background:#061827;border-radius:12px}
+    .exercise{background:linear-gradient(90deg, rgba(125,211,252,0.05), rgba(96,165,250,0.02));padding:12px;border-left:4px solid var(--accent);margin-top:12px}
+    .secrets{background:linear-gradient(90deg, rgba(255,237,214,0.02), rgba(255,243,199,0.01));color:#fff2d8;padding:12px;border-left:4px solid #f59e0b}
+    footer{color:var(--muted);font-size:13px;margin-top:18px}
+    .small{font-size:13px;color:var(--muted)}
+    .row{display:flex;gap:14px}
+    @media (max-width:720px){.row{flex-direction:column}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo">PROMPT<br/>LAB</div>
+      <div>
+        <h1>AI Prompt Engineering — Complete Guide</h1>
+        <div class="by">A practical, visual module: Beginner → Intermediate → Pro. Includes cheat-sheets, templates, and 'secret' tips.</div>
+      </div>
+    </header>
+
+    <div class="toc card">
+      <strong>Contents</strong>
+      <ol>
+        <li>Introduction & How to use this book</li>
+        <li>Prompting Basics — concepts and anatomy</li>
+        <li>Beginner: Practical prompts & patterns</li>
+        <li>Intermediate: System prompts, few-shot, chaining</li>
+        <li>Pro: RAG, tools, multimodal, evaluation</li>
+        <li>Prompt engineering workflow & testing</li>
+        <li>Secrets, advanced heuristics & anti-patterns</li>
+        <li>Ethics, safety, and deployment checklist</li>
+        <li>Prompt library, exercises, and resources</li>
+      </ol>
+      <div class="small">Tip: Use this HTML as a living manual — copy templates, experiment in your playground, and keep a prompt library.</div>
+    </div>
+
+    <section class="card">
+      <h2>1 — Introduction</h2>
+      <p>This module trains readers to become prompt engineers: people who can design, test, and optimize prompts to get predictable, high-quality results from AI systems across text, code, and images. The lessons are hands-on with templates, examples, and visual diagrams.</p>
+      <div class="diagram">
+        <!-- Simple SVG: prompt -> model -> output flow -->
+        <svg width="100%" height="140" viewBox="0 0 1000 140" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="22" width="300" height="96" rx="10" fill="#071833" stroke="#11324a"/>
+          <text x="160" y="60" fill="#7dd3fc" font-size="16" font-weight="700" text-anchor="middle">Prompt</text>
+          <text x="160" y="86" fill="#94a3b8" font-size="12" text-anchor="middle">— instructions, context, examples</text>
+          <rect x="350" y="22" width="300" height="96" rx="10" fill="#071833" stroke="#11324a"/>
+          <text x="500" y="60" fill="#7dd3fc" font-size="16" font-weight="700" text-anchor="middle">Model</text>
+          <text x="500" y="86" fill="#94a3b8" font-size="12" text-anchor="middle">— temperature, system msg, tools</text>
+          <rect x="690" y="22" width="300" height="96" rx="10" fill="#071833" stroke="#11324a"/>
+          <text x="840" y="60" fill="#7dd3fc" font-size="16" font-weight="700" text-anchor="middle">Output</text>
+          <text x="840" y="86" fill="#94a3b8" font-size="12" text-anchor="middle">— response, citations, artifacts</text>
+          <line x1="310" y1="70" x2="350" y2="70" stroke="#2b6a7a" stroke-width="3" marker-end="url(#arrow)"/>
+          <line x1="650" y1="70" x2="690" y2="70" stroke="#2b6a7a" stroke-width="3" marker-end="url(#arrow)"/>
+          <defs>
+            <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L6,3 L0,6" fill="#2b6a7a" />
+            </marker>
+          </defs>
+        </svg>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>2 — Prompt anatomy (the basics)</h2>
+      <p><strong>Core parts:</strong> <em>system</em> message (where supported), <em>instructions</em>, <em>context</em> (documents, memory), <em>examples</em> (few-shot), and <em>output format</em>. Treat prompts like software: break them into components and test each.</p>
+      <h3>Prompt recipe (simple)</h3>
+      <pre><code>1) Goal: What I want.\n2) Context: any facts, documents.\n3) Constraints: length, style, format.\n4) Examples: 1–3 examples if helpful.\n5) Output spec: JSON, bullets, or plain text.</code></pre>
+      <div class="exercise">
+        <strong>Exercise:</strong> Take this instruction: "Summarise latest research on X" and rewrite it using the prompt recipe above.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>3 — Beginner: practical patterns & templates</h2>
+      <p>Start simple. Beginners should practice templates that are reproducible. Copy → run → adjust.</p>
+      <h3>1) Instruction + Output format</h3>
+      <pre><code>Write a one-paragraph summary of the article below in <=80 words.\nArticle: [PASTE TEXT]\nSummary:</code></pre>
+
+      <h3>2) Role-play template</h3>
+      <pre><code>You are an expert UX researcher. Provide 5 usability issues found in the following app description, with numbered bullets and short fixes.\nApp: [PASTE]</code></pre>
+
+      <h3>3) Few-shot for style control</h3>
+      <pre><code>Example Input: ...\nExample Output: ...\nNow follow the pattern above for this input: [NEW INPUT]</code></pre>
+
+      <div class="secrets">
+        <strong>Secret (beginner):</strong> When a model is vague, add a tiny constraint: e.g., "Answer in 3 sentences, each under 20 words." Micro-constraints steer models strongly.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>4 — Intermediate: system prompts, few-shot, chaining</h2>
+      <p>This is where prompt engineering becomes a workflow. Use system messages to set identity & guardrails; few-shot to teach patterns; chaining to split tasks.</p>
+      <h3>System prompt examples</h3>
+      <pre><code>System: You are a careful, factual assistant. If unsure, say "I don't know" and ask to look it up. Always show reasoning steps when asked.</code></pre>
+      <h3>Chain-of-thought & decomposition</h3>
+      <p>Break complex tasks into smaller steps and use the model to solve each step. Example:</p>
+      <pre><code>1) Extract facts from document.\n2) Generate outline.\n3) Draft each section.\n4) Combine and polish.</code></pre>
+      <div class="diagram">
+        <!-- Simple SVG: decomposition steps -->
+        <svg width="100%" height="120" viewBox="0 0 900 120" xmlns="http://www.w3.org/2000/svg">
+          <g font-family="sans-serif">
+            <rect x="20" y="14" width="180" height="90" rx="10" fill="#06202b"/> <text x="110" y="60" fill="#7dd3fc" font-size="14" text-anchor="middle">Extract</text>
+            <rect x="230" y="14" width="180" height="90" rx="10" fill="#06202b"/> <text x="320" y="60" fill="#7dd3fc" font-size="14" text-anchor="middle">Outline</text>
+            <rect x="440" y="14" width="180" height="90" rx="10" fill="#06202b"/> <text x="530" y="60" fill="#7dd3fc" font-size="14" text-anchor="middle">Draft</text>
+            <rect x="650" y="14" width="180" height="90" rx="10" fill="#06202b"/> <text x="740" y="60" fill="#7dd3fc" font-size="14" text-anchor="middle">Polish</text>
+            <line x1="200" y1="60" x2="230" y2="60" stroke="#2b6a7a" stroke-width="3" marker-end="url(#a)"/>
+            <line x1="410" y1="60" x2="440" y2="60" stroke="#2b6a7a" stroke-width="3" marker-end="url(#a)"/>
+            <line x1="620" y1="60" x2="650" y2="60" stroke="#2b6a7a" stroke-width="3" marker-end="url(#a)"/>
+            <defs><marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"> <path d="M0,0 L6,3 L0,6" fill="#2b6a7a" /></marker></defs>
+          </g>
+        </svg>
+      </div>
+      <div class="exercise">
+        <strong>Exercise:</strong> Turn the prompt "Plan a 5-day trip to Cape Town" into a 4-step chain: (1) gather constraints, (2) suggest itinerary, (3) budget, (4) final itinerary.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>5 — Pro: RAG, tools, multimodal, evaluation</h2>
+      <p>At the pro level you combine models with external tools and retrieval. The goal: reliable, up-to-date, and auditable outputs.</p>
+
+      <h3>Retrieval-Augmented Generation (RAG)</h3>
+      <p>Pattern: retrieve relevant documents → condense → ask LLM to answer grounded on those passages. Always include citations to document IDs or short snippets.</p>
+      <pre><code>Step 1: Retrieve top-k docs for query.\nStep 2: Extract relevant paragraphs (with loc IDs).\nStep 3: Provide prompt: \"Answer using ONLY the paragraphs below. Cite paragraph IDs.\"</code></pre>
+
+      <h3>Tool use & instruction</h3>
+      <p>Many systems let you call tools (code execution, calculators, web search). Design the prompt to identify when to call the tool and what to do with results. Keep tool responses small and machine-friendly (JSON) so the LLM can continue processing.</p>
+
+      <h3>Multimodal prompting</h3>
+      <p>Combine text + images: provide short captions, bounding boxes, or alt-text. For images, always include the question and specify what to output—e.g., object list, caption, or JSON of coordinates.</p>
+
+      <div class="secrets">
+        <strong>Secret (pro):</strong> Use "sparse grounding" — feed only the most densely relevant passages (2–5) instead of everything. It reduces hallucination and speeds inference.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>6 — Workflow: test, measure, iterate</h2>
+      <p>Treat prompts like experiments. Track: input variants, model settings (temp, max tokens), outputs, and evaluation scores. Keep a CI-style prompt suite for important prompts.</p>
+      <h3>Evaluation metrics</h3>
+      <ul>
+        <li><strong>Accuracy:</strong> factual correctness when applicable</li>
+        <li><strong>Relevance:</strong> how well the answer matches the request</li>
+        <li><strong>Conciseness:</strong> brevity and structure</li>
+        <li><strong>Robustness:</strong> performance under small input changes</li>
+      </ul>
+      <h3>Testing checklist</h3>
+      <pre><code>• Run N=10 varied inputs.\n• Check for hallucinations.\n• Confirm format validity (JSON parse).\n• Measure consistency (semantic similarity between outputs).</code></pre>
+    </section>
+
+    <section class="card">
+      <h2>7 — Secrets & advanced heuristics</h2>
+      <p>These are high-leverage tricks used by experienced prompt engineers.</p>
+      <ol>
+        <li><strong>Signal tokens:</strong> Include tokens like "Answer concisely:" or "Step-by-step:" — models learn these anchors quickly.</li>
+        <li><strong>Delimiter trick:</strong> Use triple backticks or XML tags to separate context so models don't conflate parts.</li>
+        <li><strong>Round-trip checking:</strong> Ask the model to generate an answer and then ask it to verify or critique its own answer.</li>
+        <li><strong>Temperature staging:</strong> Use higher temp for ideation, low temp for finalization. Combine outputs (ensemble).</li>
+        <li><strong>Bias probes:</strong> Test with adversarial inputs to reveal unsafe or biased completions.</li>
+      </ol>
+      <div class="secrets">
+        <strong>Pro secret:</strong> "Debias then refine." First ask the model to produce diverse candidate answers from deliberately opposite viewpoints (high temp). Then use a low-temp evaluator prompt that ranks or picks the least-biased, most-factual candidate.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>8 — Anti-patterns & what to avoid</h2>
+      <ul>
+        <li>Overloading a single prompt with multiple unrelated tasks — split into chain steps.</li>
+        <li>Relying on implicit knowledge without grounding — always cite when facts matter.</li>
+        <li>Using too many examples — 1–3 clear examples outperform many low-quality ones.</li>
+        <li>Hard-coding the expected answer into the prompt examples (leaks).</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>9 — Ethics, safety & deployment checklist</h2>
+      <p>Design prompts with guardrails. When deploying, include monitoring for hallucinations, toxicity, and PII leaks.</p>
+      <pre><code>• Add explicit refusal style: "If asked for illegal info, refuse politely."\n• Monitor outputs for PII.\n• Keep human-in-the-loop for critical decisions.</code></pre>
+    </section>
+
+    <section class="card">
+      <h2>10 — Prompt library & templates</h2>
+      <p>Copy-ready templates for common tasks — summarization, code generation, bug-fixing, content editing, whiteboarding.</p>
+      <h3>Summarize long text</h3>
+      <pre><code>System: You are a concise summarizer.\nTask: Condense the text below into 6 bullet points, each < 25 words.\nText: [PASTE]\nOutput:</code></pre>
+      <h3>Code review</h3>
+      <pre><code>Role: Senior engineer. Provide a list of issues and suggested fixes for the function below. Output as JSON: [{\"line\":n, \"issue\":\"...\",\"fix\":\"...\"}]\nCode:\n[PASTE]</code></pre>
+    </section>
+
+    <section class="card">
+      <h2>11 — Exercises & mini-projects</h2>
+      <ol>
+        <li>Build a prompt suite for product descriptions that accepts a price, product features, and tone and outputs 3 variants (formal, playful, concise).</li>
+        <li>Create a RAG pipeline: local file retrieval → prompt to answer user query with citations.</li>
+        <li>Design a small safety test harness: feed adversarial prompts and log refusals.</li>
+      </ol>
+    </section>
+
+    <section class="card">
+      <h2>12 — Quick reference cheat-sheets</h2>
+      <h3>Temperature & creativity</h3>
+      <ul>
+        <li>0.0–0.3: deterministic, factual</li>
+        <li>0.4–0.7: creative, controlled</li>
+        <li>0.8–1.0: high creativity, variation</li>
+      </ul>
+      <h3>Token budget tips</h3>
+      <ol>
+        <li>Shorten context: keep only the most relevant passages.</li>
+        <li>Compress with summaries before asking for synthesis.</li>
+      </ol>
+    </section>
+
+    <section class="card">
+      <h2>13 — Resources & next steps</h2>
+      <p>Practice daily. Keep a prompt notebook and iterate. Explore model APIs (OpenAI, Hugging Face, Anthropic) and learn how to evaluate and deploy safely.</p>
+      <div class="small">If you'd like, I can expand any chapter into a printable PDF, create slides for a workshop, or build a companion CSV prompt library.</div>
+    </section>
+
+    <footer class="card">
+      <div class="small">Created for you — a practical training module to learn prompt engineering end-to-end. Happy prompting!</div>
+    </footer>
+  </div>
+</body>
+</html>
