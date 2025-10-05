@@ -42,7 +42,7 @@ It’s not just a list of tips — it’s a **step-by-step guide** that will tak
 
 ## ⚖️ License & Usage
 - Free for **personal and educational use**  
-- Redistribution of the book in full (or resale) is **not permitted**  
+- Redistribution of the book in full is permitted but **not for sale**  
 - Please **credit Tobela Qampa** when referencing material in teaching, research, or publication  
 
 ---
