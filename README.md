@@ -33,7 +33,7 @@ This book includes:
 
 ## ⚖️ License & Usage
 - Free for **personal and educational use**.  
-- Redistribution of the book in full (or resale) is **not permitted** without written consent.  
+- Redistribution of the book in full is permitted but **not for sale**.  
 - Please **credit Tobela Qampa** when referencing material in teaching, research, or publication.  
 
 ---
