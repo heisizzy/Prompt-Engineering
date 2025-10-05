@@ -13,7 +13,6 @@ This is a **complete, hands-on manual** for mastering **AI prompt engineering**.
 It’s not just a list of tips — it’s a **step-by-step guide** that will take you from beginner → professional, teaching you how to design, test, and deploy prompts like an engineer.
 
 📘 Formats available:
-- **PDF (styled)** with visuals, cover, cheat-sheets, and templates  
 - **HTML (responsive)** for mobile use & quick copy-paste  
 
 ---
