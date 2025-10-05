@@ -3,7 +3,7 @@
 **Copyright © 2025 Tobela Qampa. All Rights Reserved.**
 
 [![GitHub release](https://img.shields.io/github/v/release/heisizzy/Prompt-Engineering?color=blue)](https://github.com/heisizzy/Prompt-Engineering/releases)
-[![Downloads](https://img.shields.io/github/downloads/heisizzy/Prompt-Engineering/total?color=green)](https://github.com/heisizzy/Prompt-Engineering/releases)
+[![Download](https://img.shields.io/github/downloads/heisizzy/Prompt-Engineering/total?color=green)](https://github.com/heisizzy/Prompt-Engineering/archive/refs/tags/Book.zip)
 
 ---
 
